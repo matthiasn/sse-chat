@@ -1,0 +1,27 @@
+@(message: String)
+
+@main(message) {
+    <div>
+        <div id="header">
+        Your Name: <input type="text" name="user" id="userField" value="John Doe" />
+
+        <select class="target" id="roomSelector">
+            <option value="room1" selected="selected">Room 1</option>
+            <option value="room2">Room 2</option>
+            <option value="room3">Room 3</option>
+            <option value="room4">Room 4</option>
+            <option value="room5">Room 5</option>
+        </select>
+        </div>
+
+        <div id="chat"></div>
+
+        <div id="footer">
+            Say something: <input type="text" name="chat" id="textField" />
+            <input type="button" id="saySomething" value="Submit" />            
+        </div>
+
+    </div>
+
+    @helper.requireJs(core = routes.Assets.at("javascripts/require.js").url, module = routes.Assets.at("javascripts/main").url)
+}

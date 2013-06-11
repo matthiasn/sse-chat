@@ -1,0 +1,46 @@
+body {
+    font-family: helvetica;
+    color: #333;
+    padding-left: 25px;
+}
+
+#chat {
+    position: absolute;
+    top: 70px;
+    height: 400px;
+    width: 400px;
+    overflow-y: auto;
+}
+
+.msg {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 400px;
+}
+
+.self {
+}
+
+.others {
+    background: lightblue;
+}
+
+#textField {
+    width: 200px;
+}
+
+#header {
+    position: absolute;
+    top: 30px;
+    width: 400px;
+    height: 40px;
+    font-weight: bold;
+}
+
+#footer {
+    position: absolute;
+    top: 500px;
+    width: 400px;
+    height: 40px;
+    font-weight: bold;
+}
