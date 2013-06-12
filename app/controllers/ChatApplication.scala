@@ -17,9 +17,9 @@ object ChatApplication extends Controller {
   def postMessage = Action(parse.json) { req => chatChannel.push(req.body); Ok }
 
   /** Enumeratee for filtering messages based on room */
-  def roomFilter(room: String) = Enumeratee.filter[JsValue] { json: JsValue => (json \ "room").as[String] == room }
+  def filter(room: String) = Enumeratee.filter[JsValue] { json: JsValue => (json \ "room").as[String] == room }
 
   /** Controller action serving activity based on room */
-  def chatFeed(room: String) = Action { Ok.stream(chatOut &> roomFilter(room) &> EventSource()).as("text/event-stream") }
+  def chatFeed(room: String) = Action { Ok.stream(chatOut &> filter(room) &> EventSource()).as("text/event-stream") }
 
 }
