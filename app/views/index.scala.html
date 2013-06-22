@@ -1,27 +1,44 @@
-@(message: String)
+@(title: String)
 
-@main(message) {
-    <div>
-        <div id="header">
-        Your Name: <input type="text" name="user" id="userField" value="John Doe" />
+<!DOCTYPE html>
 
-        <select class="target" id="roomSelector">
-            <option value="room1" selected="selected">Room 1</option>
-            <option value="room2">Room 2</option>
-            <option value="room3">Room 3</option>
-            <option value="room4">Room 4</option>
-            <option value="room5">Room 5</option>
-        </select>
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    </head>
+    <body ng-app="sseChat">
+        
+        <div ng-controller="ChatCtrl">
+            <div id="header">
+                Your Name: <input type="text" name="user" id="userField" value="John Doe" ng-model="user" />
+                <select ng-model="currentRoom" ng-change="setCurrentRoom(currentRoom)" ng-options="r.name for r in rooms"></select>
+            </div>
+
+            <div id="chat">
+                <div class="{{msg.who}} msg" ng-repeat="msg in msgs | limitTo:-10"
+                ng-class="msg.user !== user ? 'others' : ''"
+                data-ng-show="hidden == false" data-ng-hide="hidden == true"
+                data-ng-animate="'fadeIn'">{{msg.time}}<br/>
+                    <strong>{{msg.user}} says: </strong>{{msg.text}}<br/>
+                </div>
+            </div>
+
+            <div id="footer">
+                <form ng-submit="submitMsg()">
+                    Say something: <input type="text" name="chat" id="textField" ng-model="inputText" />
+                    <input type="button" id="saySomething" value="Submit" ng-click="submitMsg()" />
+                </form>
+            </div>
         </div>
 
-        <div id="chat"></div>
+        <script src="@routes.Assets.at("javascripts/vendor/angular-1.1.5.min.js")"></script>
+        <script src="/assets/javascripts/app.js"></script>
+        <script src="/assets/javascripts/services.js"></script>
+        <script src="/assets/javascripts/controllers.js"></script>
+        
+    </body>
+</html>
 
-        <div id="footer">
-            Say something: <input type="text" name="chat" id="textField" />
-            <input type="button" id="saySomething" value="Submit" />            
-        </div>
 
-    </div>
-
-    @helper.requireJs(core = routes.Assets.at("javascripts/require.js").url, module = routes.Assets.at("javascripts/main").url)
-}

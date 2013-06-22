@@ -21,5 +21,5 @@ object ChatApplication extends Controller {
 
   /** Controller action serving activity based on room */
   def chatFeed(room: String) = Action { Ok.stream(chatOut &> filter(room) &> EventSource()).as("text/event-stream") }
-
+  
 }
