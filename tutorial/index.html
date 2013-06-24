@@ -1,100 +1,15 @@
 <html>
 <head>
-    <title>Template Template - Activator Template</title>
+    <title>SSE Chat - Activator Template</title>
 </head>
 <body>
 <div>
-    <h2>Template Structure</h2>
+    <h2>Explore the App</h2>
 
-    <p>
-        You can contribute your own templates to Activator by simply creating a new project in the correct structure and then publishing it.  This tutorial will walk you through the structure of a template and show you how to publish templates.
-    </p>
+    <p>This is a simple chat application for demonstrating the usage of Server Sent Events together with an AngularJS single page application.
+       You can select one of five chat rooms. You will find that Romeo and Juliet are having a conversation in room one. That way the app is a little more interesting to look at than the average chat example application.
 
-    <p>
-        There are three main parts to a template:
-        <ol>
-            <li>A Project with an SBT build</li>
-            <li>A Tutorial for the Project</li>
-            <li>Template Metadata</li>
-        </ol>
-    </p>
-    
-    <p>
-        These three pieces are combined into a project that can be used in Activator and as a regular SBT project.  With Activator, when a user creates a new app from a template, the tutorial and the metadata are not included in the new project.
-    </p>
-</div>
-<div>
-    <h2>Project Structure</h2>
-
-    <p>
-        The project for an Activator template should have the following layout:
-        <ul>
-            <li><a href="#code/app" class="shortcut">/app</a> contains the Java and Scala app source code</li>
-            <li><a href="#code/project" class="shortcut">/project</a> contains the SBT metadata and optionally any SBT plugin definitions</li>
-            <li><a href="#code/build.sbt" class="shortcut">/build.sbt</a> or <a href="#code/project/Build.scala" class="shortcut">/project/Build.scala</a> contains the app's SBT build definition</li>
-            <li><a href="#code/test" class="shortcut">/test</a> contains the Java and Scala test source source</li>
-            <li><a href="#code/conf" class="shortcut">/conf</a> optionally contains the <a href="#code/conf/routes" class="shortcut">/conf/routes</a> and <a href="#code/conf/application.conf" class="shortcut">/conf/application.conf</a> files for Play apps</li>
-        </ul>
-    </p>
-    
-    <p>
-        The project must set a required SBT version in the <a href="#code/project/build.properties" class="shortcut">/project/build.properties</a> file, like:
-        <pre><code>sbt.version=0.12.3</code></pre>
-    </p>
-    
-    <p>
-        To create consistency across all templates in Activator, the default <a href="#code/build.sbt" class="shortcut">/build.sbt</a> follows the Play defaults and changes the main source directories from <code>/src/main/java</code> and <code>/src/main/scala</code> to just <code>/app</code>.  It also changes the main test directories from <code>/src/test/java</code> and <code>/src/test/scala</code> to just <code>/test</code>.  Please keep these settings in place since users can easily change them after creating a new project.
-    </p>
-</div>
-<div>
-    <h2>Tutorial Structure</h2>
-
-    <p>
-        The tutorial you are reading right now comes from the <a href="#code/tutorial/index.html" class="shortcut">/tutorial/index.html</a> file.
-    </p>
-    
-    <p>
-        Each section of the tutorial must be in a <code>&lt;div&gt;</code> tag that is inside the <code>&lt;body&gt;</code> tag.  Each section must have a single <code>&lt;h2&gt;</code> tag that contains the section's title.
-    </p>
-    
-    <p>
-        The tutorial can provide shortcut links to places in Activator by using an anchor link (<code>#</code>) and the <code>shortcut</code> class, like:
-        <pre><code>&lt;a href="#code/tutorial/index.html" class="shortcut"&gt;/tutorial/index.html&lt;/a&gt;</code></pre>
-    </p>
-    
-    <p>
-        Code blocks can use <code>&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;</code> tags, like:
-        <pre><code>&lt;pre&gt;&lt;code&gt;println("hello, Scala!")
-val foo = "Bar"&lt;/code&gt;&lt;/pre&gt;</code></pre>
-    </p>
-    
-    <p>
-        In-line code can use just the <code>&lt;code&gt;&lt;/code&gt;</code> tag, like:
-        <pre><code>The &lt;code&gt;val foo = "Bar"&lt;/code&gt; statement sets &lt;code&gt;foo&lt;/code&gt; to &lt;code&gt;Bar&lt;/code&gt;</code></pre>
-    </p>
-</div>
-<div>
-    <h2>Metadata Structure</h2>
-
-    <p>
-        Activator templates must provide an <a href="#code/activator.properties" class="shortcut">activator.properties</a> file which contains the template metadata.  The required properties are:
-        <ul>
-            <li><code>name</code> - A globally unique, URL friendly name for the template</li>
-            <li><code>title</code> - A human readable name for the template</li>
-            <li><code>description</code> - A plain text description for the template</li>
-            <li><code>tags</code> - A comma-seperated list of tags for the template</li>
-        </ul>
-        These values will be verified when you publish your template.
-    </p>
-</div>
-<div>
-    <h2>Publishing</h2>
-
-    <p>
-        At this time templates must first be published publicly on <a href="http://github.com" target="_blank">GitHub</a>.  Then they can be added to Activator through the <a href="http://typesafe.com/activator/template/contribute" target="_blank">Activator Contribution</a> page.  There you can enter a Git URL, like:
-        <pre><code>git://github.com/typesafehub/activator-template-template.git</code></pre>
-        This will use the <code>master</code> branch of your repo.
-        Soon publishing will happen automatically whenever your GitHub repo changes (for the specified branch).  Until then you will need to go through this process every time you want to publish a new version.
+        For more information on this application please visit <a href="http://matthiasnehlsen.com/blog/2013/06/23/angularjs-and-play-framework/" target="_blank">matthiasnehlsen.com</a>       
     </p>
 </div>
 </body>

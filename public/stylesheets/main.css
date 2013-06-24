@@ -23,6 +23,10 @@ body {
     background: #99D8FF;
 }
 
+.juliet {
+    background: #FF69B4;
+}
+
 #textField {
     width: 320px;
     position: relative;

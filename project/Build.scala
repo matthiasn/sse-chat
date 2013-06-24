@@ -9,6 +9,5 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq()
 
-  val main = play.Project(appName, appVersion, appDependencies).settings( )
-
+  val main = play.Project(appName, appVersion, appDependencies).settings()
 }

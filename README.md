@@ -1,10 +1,22 @@
-sse-chat-example
-================
+sse-chat
+========
 
-This is a simple chat application using **[Play Framework](http://www.playframework.com)** together with **[AngularJS](http://angularjs.org)**. It makes use of a Concurrent.Broadcast object as an Enumerator, a filtering Enumeratee and EventSource as the **[Iteratee](http://www.playframework.com/documentation/2.1.0/Iteratees)**. Together these building blocks facilitate the chat message data flow within the application, with no more than 5 lines of code in Scala for the entire application. 
+This is a simple chat application using **[Play Framework](http://www.playframework.com)** together with **[AngularJS](http://angularjs.org)**. It makes use of a Concurrent.Broadcast object as an Enumerator, a filtering Enumeratee and EventSource as the **[Iteratee](http://www.playframework.com/documentation/2.1.0/Iteratees)**. Together these building blocks facilitate the chat message data flow within the application, with less than 10 lines of code in Scala for the entire application. 
 
-![Architecture](./docs/sse-chat.png)
+![Architecture](./tutorial/sse-chat.png)
 
-The application uses Server Sent Events for delivering messages to the client and REST calls for sending messages to the server. The messages flow from the POST to the **[Server Sent Events (SSE)](http://dev.w3.org/html5/eventsource/)** stream through Concurrent.Broadcast as the central information hub into the chatFeed controller which attaches an Enumeratee / Iteratee chain  to the Enumerator provided by Concurrent.Broadcast.
+The application uses Server Sent Events for delivering messages to the client and REST calls for sending messages to the server. The messages flow from the POST to the **[Server Sent Events (SSE)](http://dev.w3.org/html5/eventsource/)** stream through Concurrent.broadcast as the central information hub into the chatFeed controller which attaches an Enumeratee / Iteratee chain to the Enumerator provided by Concurrent.broadcast. Filtering for the correct chat room is done with a filtering Enumeratee. 
 
-The client is designed as a single page application using **[AngularJS](http://angularjs.org)**. The file organization is inspired by the **[angular-seed](https://github.com/angular/angular-seed)** project.
+![Architecture](./tutorial/sse-chat2.png)
+
+The client is designed as a single page application using **[AngularJS](http://angularjs.org)**. The file organization is inspired by the **[angular-seed](https://github.com/angular/angular-seed)** project. 
+
+There are Romeo and Juliet hanging out in Room 1 in order to make looking at the app a little less boring. They are having their balcony scene conversation, but they are confused, uttering the lines at random.
+
+How to run this: 
+
+1) with Play installed on your machine: **play run** in the project folder
+    
+2) without Play installed you can make use of the Typesafe Activator feature: **./activator ui** in the project folder (or double click on activator script in OS X)
+
+More information on **[matthiasnehlsen.com](http://matthiasnehlsen.com/blog/2013/06/23/angularjs-and-play-framework/)**.
