@@ -13,6 +13,7 @@ angular.module('sseChat.controllers', ['sseChat.services']).
         $scope.setCurrentRoom = function (room) {
             $scope.currentRoom = room;
             $scope.chatFeed.close();
+            $scope.msgs = [];
             $scope.listen();
         };
 
