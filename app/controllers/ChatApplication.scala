@@ -2,7 +2,7 @@ package controllers
 
 import play.api.mvc._
 import play.api.libs.json.JsValue
-import play.api.libs.iteratee.{Enumeratee, Concurrent}
+import play.api.libs.iteratee.{Concurrent, Enumeratee}
 import play.api.libs.EventSource
 
 object ChatApplication extends Controller {
@@ -20,6 +20,8 @@ object ChatApplication extends Controller {
   def filter(room: String) = Enumeratee.filter[JsValue] { json: JsValue => (json \ "room").as[String] == room }
 
   /** Controller action serving activity based on room */
-  def chatFeed(room: String) = Action { Ok.stream(chatOut &> filter(room) &> EventSource()).as("text/event-stream") }
+  def chatFeed(room: String) = Action { 
+    Ok.stream(chatOut &> filter(room) &> Concurrent.buffer(20) &> EventSource()).as("text/event-stream") 
+  }
 
 }
