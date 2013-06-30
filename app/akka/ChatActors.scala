@@ -18,13 +18,13 @@ object ChatActors {
   val system = ActorSystem("sse-chat")
 
   /** Supervisor for Romeo and Juliet */
-  val wsClientSupervisor = system.actorOf(Props(new Supervisor(system.eventStream)), "ChatterSupervisor")
+  val supervisor = system.actorOf(Props(new Supervisor()), "ChatterSupervisor")
 
   case object Talk
 }
 
 /** Supervisor initiating Romeo and Juliet actors and scheduling their talking */
-class Supervisor(eventStream: akka.event.EventStream) extends Actor {
+class Supervisor() extends Actor {
 
   val juliet = context.actorOf(Props(new Chatter("Juliet", Quotes.juliet)))
   context.system.scheduler.schedule(1 seconds, 10 seconds, juliet, ChatActors.Talk)
