@@ -19,9 +19,19 @@ object ChatApplication extends Controller {
   /** Enumeratee for filtering messages based on room */
   def filter(room: String) = Enumeratee.filter[JsValue] { json: JsValue => (json \ "room").as[String] == room }
 
+  /** Enumeratee for detecting disconnect of SSE stream */
+  def connDeathWatch(addr: String): Enumeratee[JsValue, JsValue] = 
+    Enumeratee.onIterateeDone{ () => println(addr + " - SSE disconnected") }
+
   /** Controller action serving activity based on room */
-  def chatFeed(room: String) = Action { 
-    Ok.stream(chatOut &> filter(room) &> Concurrent.buffer(20) &> EventSource()).as("text/event-stream") 
+  def chatFeed(room: String) = Action { req =>
+    println(req.remoteAddress + " - SSE connected")
+    Ok.stream(chatOut 
+      &> filter(room) 
+      &> Concurrent.buffer(50) 
+      &> connDeathWatch(req.remoteAddress)
+      &> EventSource()
+    ).as("text/event-stream") 
   }
 
 }
