@@ -11,6 +11,7 @@ import scala.concurrent.duration._
 import controllers.ChatApplication
 import org.joda.time.DateTime
 import scala.util.Random
+import controllers.ChatApplication.Message
 
 object ChatActors {
   
@@ -27,10 +28,10 @@ object ChatActors {
 class Supervisor() extends Actor {
 
   val juliet = context.actorOf(Props(new Chatter("Juliet", Quotes.juliet)))
-  context.system.scheduler.schedule(1 seconds, 10 seconds, juliet, ChatActors.Talk)
+  context.system.scheduler.schedule(1 seconds, 5 seconds, juliet, ChatActors.Talk)
   
   val romeo = context.actorOf(Props(new Chatter("Romeo", Quotes.romeo)))
-  context.system.scheduler.schedule(6 seconds, 10 seconds, romeo, ChatActors.Talk)
+  context.system.scheduler.schedule(3 seconds, 5 seconds, romeo, ChatActors.Talk)
 
   def receive = { case _ => }
 }
@@ -40,11 +41,11 @@ class Chatter(name: String, quotes: Seq[String]) extends Actor {
   
   def receive = {
     case ChatActors.Talk  => {
-      val now = DateTime.now.toString()
+      val now: String = DateTime.now.toString
       val quote = quotes(Random.nextInt(quotes.size))
       val msg = Json.obj("room" -> "room1", "text" -> quote, "user" ->  name, "time" -> now )
 
-      ChatApplication.chatChannel.push(msg)
+      ChatApplication.chatChannel.push(Message(msg, "local"))
     }
   }
 } 
