@@ -40,7 +40,7 @@ class Chatter(name: String, quotes: Seq[String]) extends Actor {
   
   def receive = {
     case ChatActors.Talk  => {
-      val now = DateTime.now.toString()
+      val now: String = DateTime.now.toString
       val quote = quotes(Random.nextInt(quotes.size))
       val msg = Json.obj("room" -> "room1", "text" -> quote, "user" ->  name, "time" -> now )
 

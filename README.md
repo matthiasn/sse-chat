@@ -1,7 +1,7 @@
 sse-chat
 ========
 
-This is a simple chat application using **[Play Framework](http://www.playframework.com)** together with **[AngularJS](http://angularjs.org)**. It makes use of a Concurrent.Broadcast object as an Enumerator, a filtering Enumeratee and EventSource as the **[Iteratee](http://www.playframework.com/documentation/2.1.0/Iteratees)**. Together these building blocks facilitate the chat message data flow within the application, with less than 10 lines of code in Scala for the entire application. 
+This is a simple chat application using **[Play Framework](http://www.playframework.com)** together with **[AngularJS](http://angularjs.org)**. It makes use of a Concurrent.Broadcast object as an Enumerator, a filtering Enumeratee and EventSource as the **[Iteratee](http://www.playframework.com/documentation/2.1.0/Iteratees)**. Together these building blocks facilitate the chat message data flow within the application. 
 
 ![Architecture](./tutorial/sse-chat.png)
 
@@ -18,6 +18,8 @@ How to run this:
 1) with Play installed on your machine: **play run** in the project folder
     
 2) without Play installed you can make use of the Typesafe Activator feature: **./activator ui** in the project folder (or double click on activator script in OS X)
+
+This application will work in Firefox, Safari, Chrome and Opera. It will not work in Internet Explorer, simply because Microsoft for whatever reason does not support Server Sent Events.  
 
 More information on **[matthiasnehlsen.com](http://matthiasnehlsen.com/blog/2013/06/23/angularjs-and-play-framework/)**.
 

@@ -26,9 +26,7 @@
 
             <div id="chat">
                 <div class="{{msg.who}} msg" ng-repeat="msg in msgs | limitTo:-10"
-                ng-class="msg.user === 'Juliet' ? 'juliet' : msg.user !== user ? 'others' : ''" 
-                data-ng-show="hidden == false" data-ng-hide="hidden == true"
-                data-ng-animate="'fadeIn'">{{msg.time}}<br/>
+                ng-class="msg.user === 'Juliet' ? 'juliet' : msg.user !== user ? 'others' : ''">{{msg.time}}<br/>
                     <strong>{{msg.user}} says: </strong>{{msg.text}}<br/>
                 </div>
             </div>
