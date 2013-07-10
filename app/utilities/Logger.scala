@@ -66,11 +66,7 @@ object Logger {
             "country_code" -> res.json \ "country_code",
             "country" -> res.json \ "country_name",
             "region_code" -> res.json \ "region_code",
-            "region" -> res.json \ "region_name",
-            "city" -> res.json \ "city",
-            "geoJSON" -> JsArray(Seq(res.json \ "longitude", res.json \ "latitude")),
-            "long" -> res.json \ "longitude",
-            "lat" -> res.json \ "latitude")
+            "region" -> res.json \ "region_name")
           log(req.toString(), msg, "INFO", Some(geoLogItem))
         }
       }
