@@ -4,6 +4,7 @@ import play.api.mvc._
 import play.api.libs.json.JsValue
 import play.api.libs.iteratee.{Concurrent, Enumeratee}
 import play.api.libs.EventSource
+import play.api.libs.concurrent.Execution.Implicits._
 
 object ChatApplication extends Controller {
 
