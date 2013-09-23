@@ -5,7 +5,6 @@ version := "1.0"
 //scalaVersion := "2.10.0"
 
 libraryDependencies ++= Seq(
-//  "org.webjars" %% "webjars-play" % "2.1.0-2" exclude("org.scala-stm", //"scala-stm_2.10.0"),
 "org.webjars" % "webjars-play_2.10" % "2.2.0",
   "org.webjars" % "angularjs" % "1.1.5-1",
   "org.webjars" % "bootstrap" % "2.3.2",
