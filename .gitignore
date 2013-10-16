@@ -20,3 +20,6 @@ test-result
 server.pid
 *.iml
 *.eml
+activator-sbt-atmos-play-shim.sbt
+activator-sbt-eclipse-shim.sbt
+activator-sbt-idea-shim.sbt

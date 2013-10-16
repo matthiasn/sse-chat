@@ -10,7 +10,7 @@
 @echo off
 if "%ACTIVATOR_HOME%"=="" set "ACTIVATOR_HOME=%~dp0"
 set ERROR_CODE=0
-set APP_VERSION=0.2.6
+set APP_VERSION=1.0.0
 set ACTIVATOR_LAUNCH_JAR=activator-launch-%APP_VERSION%.jar
 
 rem Detect if we were double clicked, although theoretically A user could
@@ -18,7 +18,7 @@ rem manually run cmd /c
 for %%x in (%cmdcmdline%) do if %%~x==/c set DOUBLECLICKED=1
 
 rem FIRST we load the config file of extra options.
-set "CFG_FILE=%ACTIVATOR_HOME%activatorconfig.txt"
+set "CFG_FILE=%UserProfile%\.activator\activatorconfig.txt"
 set CFG_OPTS=
 if exist %CFG_FILE% (
   FOR /F "tokens=* eol=# usebackq delims=" %%i IN ("%CFG_FILE%") DO (

@@ -25,12 +25,14 @@ realpath () {
 )
 }
 
+# TODO - Do we need to detect msys?
+
 # Uses uname to detect if we're in the odd cygwin environment.
 is_cygwin() {
   local os=$(uname -s)
   case "$os" in
-  CYGWIN*) return 0 ;;
-  *)  return 1 ;;
+    CYGWIN*) return 0 ;;
+    *)  return 1 ;;
   esac
 }
 
@@ -187,7 +189,8 @@ run() {
   #check for jline terminal fixes on cygwin
   if is_cygwin; then
     stty -icanon min 1 -echo > /dev/null 2>&1
-    addJava "-Djline.terminal=unix"
+    addJava "-Djline.terminal=jline.UnixTerminal"
+    addJava "-Dsbt.cygwin=true"
   fi
   # run sbt
   execRunner "$java_cmd" \
@@ -202,8 +205,8 @@ run() {
   local exit_code=$?
   if is_cygwin; then
     stty icanon echo > /dev/null 2>&1
-    exit $exit_code
   fi
+  exit $exit_code
 }
 
 # Loads a configuration file full of default command line options for this script.
@@ -248,11 +251,18 @@ declare -a residual_args
 declare -a java_args
 declare -a app_commands
 declare -r activator_home="$(realpath "$(dirname "$0")")"
-declare -r app_version="0.2.6"
+declare -r app_version="1.0.0"
 
 declare -r app_launcher="${activator_home}/activator-launch-${app_version}.jar"
 declare -r script_name=activator
 declare -r java_cmd=$(get_java_cmd)
+userhome="$HOME"
+if is_cygwin; then
+  # cygwin sets home to something f-d up, set to real windows homedir
+  userhome="$USERPROFILE"
+fi
+declare -r activator_user_home_dir="${userhome}/.activator"
+declare -r java_opts_config="${activator_user_home_dir}/activatorconfig.txt"
 
 # Now check to see if it's a good enough version
 declare -r java_version=$("$java_cmd" -version 2>&1 | awk -F '"' '/version/ {print $2}')
@@ -274,8 +284,13 @@ elif [[ ! "$java_version" > "1.6" ]]; then
   exit 1
 fi
 
-
-# if configuration files exist, prepend their contents to $@ so it can be processed by this runner
-[[ -f "$script_conf_file" ]] && set -- $(loadConfigFile "$script_conf_file") "$@"
+# if configuration files exist, prepend their contents to the java args so it can be processed by this runner
+if [[ -f "$java_opts_config" ]]; then
+  config_opts=$(loadConfigFile "$java_opts_config")
+  for item in $config_opts
+  do
+    addJava "$item"
+  done
+fi
 
 run "$@"
