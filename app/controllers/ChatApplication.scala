@@ -11,11 +11,14 @@ object ChatApplication extends Controller {
   /** Central hub for distributing chat messages */
   val (chatOut, chatChannel) = Concurrent.broadcast[JsValue]
 
-  /** Controller action serving chat page */
-  def index = Action { Ok(views.html.index("Chat using Server Sent Events")) }
+  /** Controller action serving AngularJS chat page */
+  def index = Action { Ok(views.html.index("Chat using Server Sent Events and AngularJS")) }
+
+  /** Controller action serving AngularJS chat page */
+  def indexReact = Action { Ok(views.html.react("Chat using Server Sent Events and React")) }
 
   /** Controller action for POSTing chat messages */
-  def postMessage = Action(parse.json) { req => chatChannel.push(req.body); Ok }
+  def postMessage = Action(parse.json) { req => println(req.body); chatChannel.push(req.body); Ok }
 
   /** Enumeratee for filtering messages based on room */
   def filter(room: String) = Enumeratee.filter[JsValue] { json: JsValue => (json \ "room").as[String] == room }

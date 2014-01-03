@@ -9,6 +9,8 @@
         <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
         <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))"></script>
         <script src="@routes.Assets.at("javascripts/app.js")"></script>
         <script src="@routes.Assets.at("javascripts/services.js")"></script>
@@ -25,7 +27,7 @@
             </div>
 
             <div id="chat">
-                <div class="{{msg.who}} msg" ng-repeat="msg in msgs | limitTo:-10"
+                <div class="{{msg.who}} msg" ng-repeat="msg in msgs | limitTo:-4"
                 ng-class="msg.user === 'Juliet' ? 'juliet' : msg.user !== user ? 'others' : ''">{{msg.time}}<br/>
                     <strong>{{msg.user}} says: </strong>{{msg.text}}<br/>
                 </div>
