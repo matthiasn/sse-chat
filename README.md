@@ -9,7 +9,9 @@ The application uses Server Sent Events for delivering messages to the client an
 
 ![Architecture](./tutorial/sse-chat2.png)
 
-The client is designed as a single page application using **[AngularJS](http://angularjs.org)**. The file organization is inspired by the **[angular-seed](https://github.com/angular/angular-seed)** project. 
+The client is designed as a single page application using **[AngularJS](http://angularjs.org)**. The file organization is inspired by the **[angular-seed](https://github.com/angular/angular-seed)** project.
+
+Alternatively, there is another client based on Facebook's React instead of AngularJS. This alternive version can be accessed under ```localhost:9000/react```. Blog post about the React version will follow.
 
 There are Romeo and Juliet hanging out in Room 1 in order to make looking at the app a little less boring. They are having their balcony scene conversation, but they are confused, uttering the lines at random.
 
