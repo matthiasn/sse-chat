@@ -30,7 +30,7 @@ object ChatApplication extends Controller {
   /** Controller action serving activity based on room */
   def chatFeed(room: String) = Action { req =>
     println(req.remoteAddress + " - SSE connected")
-    Ok.chunked(chatOut
+    Ok.feed(chatOut
       &> filter(room) 
       &> Concurrent.buffer(50) 
       &> connDeathWatch(req.remoteAddress)
