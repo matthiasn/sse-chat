@@ -4,7 +4,12 @@
 angular.module('sseChat.controllers', ['sseChat.services']).
     controller('ChatCtrl', function ($scope, $http, chatModel) {
         $scope.rooms = chatModel.getRooms();
-        $scope.msgs = [];
+
+        var msgs = [];
+        $scope.msgs = function () {
+            return _.last(JSON.parse(JSON.stringify(msgs)), 3);
+        };
+
         $scope.inputText = "";
         $scope.user = "Jane Doe #" + Math.floor((Math.random() * 100) + 1);
         $scope.currentRoom = $scope.rooms[0];
@@ -13,7 +18,7 @@ angular.module('sseChat.controllers', ['sseChat.services']).
         $scope.setCurrentRoom = function (room) {
             $scope.currentRoom = room;
             $scope.chatFeed.close();
-            $scope.msgs = [];
+            msgs = [];
             $scope.listen();
         };
 
@@ -26,7 +31,7 @@ angular.module('sseChat.controllers', ['sseChat.services']).
 
         /** handle incoming messages: add to messages array */
         $scope.addMsg = function (msg) {
-            $scope.$apply(function () { $scope.msgs.push(JSON.parse(msg.data)); });
+            $scope.$apply(function () { msgs.push(JSON.parse(msg.data)); });
         };
 
         /** start listening on messages from selected room */

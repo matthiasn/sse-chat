@@ -27,7 +27,7 @@
             </div>
 
             <div id="chat">
-                <div class="{{msg.who}} msg" ng-repeat="msg in msgs | limitTo:-4"
+                <div class="{{msg.who}} msg" ng-repeat="msg in msgs()"
                 ng-class="msg.user === 'Juliet' ? 'juliet' : msg.user !== user ? 'others' : ''">{{msg.time}}<br/>
                     <strong>{{msg.user}} says: </strong>{{msg.text}}<br/>
                 </div>
@@ -41,6 +41,6 @@
                 </form>
             </div>
         </div>
- 
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
     </body>
 </html>
