@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.ChatApplication.index
 GET     /react                      controllers.ChatApplication.indexReact
+GET     /react-scala-js             controllers.ChatApplication.indexReactScalaJS
 GET     /chatFeed/:room             controllers.ChatApplication.chatFeed(room: String)
 POST    /chat                       controllers.ChatApplication.postMessage
 

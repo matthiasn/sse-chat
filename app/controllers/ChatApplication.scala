@@ -14,8 +14,11 @@ object ChatApplication extends Controller {
   /** Controller action serving AngularJS chat page */
   def index = Action { Ok(views.html.index("Chat using Server Sent Events and AngularJS")) }
 
-  /** Controller action serving AngularJS chat page */
+  /** Controller action serving React chat page */
   def indexReact = Action { Ok(views.html.react("Chat using Server Sent Events and React")) }
+
+  /** Controller action serving React chat page */
+  def indexReactScalaJS = Action { Ok(views.html.react_scala_js("Chat using Server Sent Events, React and Scala.js")) }
 
   /** Controller action for POSTing chat messages */
   def postMessage = Action(parse.json) { req => println(req.body); chatChannel.push(req.body); Ok }

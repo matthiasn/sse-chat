@@ -23,3 +23,5 @@ server.pid
 activator-sbt-atmos-play-shim.sbt
 activator-sbt-eclipse-shim.sbt
 activator-sbt-idea-shim.sbt
+
+public/scala-js/
