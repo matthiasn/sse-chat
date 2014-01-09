@@ -27,10 +27,10 @@ object ChatActors {
 class Supervisor() extends Actor {
 
   val juliet = context.actorOf(Props(new Chatter("Juliet", Quotes.juliet)))
-  context.system.scheduler.schedule(1 seconds, 5 seconds, juliet, ChatActors.Talk)
+  context.system.scheduler.schedule(1 seconds, 8 seconds, juliet, ChatActors.Talk)
   
   val romeo = context.actorOf(Props(new Chatter("Romeo", Quotes.romeo)))
-  context.system.scheduler.schedule(6 seconds, 5 seconds, romeo, ChatActors.Talk)
+  context.system.scheduler.schedule(5 seconds, 8 seconds, romeo, ChatActors.Talk)
 
   def receive = { case _ => }
 }

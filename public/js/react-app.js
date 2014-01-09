@@ -61,7 +61,7 @@ var SseChatApp = SseChatApp || {};
     /** undo component*/
     var UndoBox = React.createClass({
         handleUndo: function () { this.props.scalaApp.undo(); },
-        handleUndoAll: function () { this.props.scalaApp.undoAll(10); },
+        handleUndoAll: function () { this.props.scalaApp.undoAll(150); },
         render: function () { return (
             <div className="undo">
                 <input type="button" className="btn" value="Undo" onClick={this.handleUndo} />
