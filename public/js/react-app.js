@@ -7,7 +7,7 @@ var SseChatApp = SseChatApp || {};
     var ChatMsg = React.createClass({
         render: function() { return (
             <div className={"msg " + (this.props.user === "Juliet" ? "juliet" : this.props.user !== this.props.name ? "others" : "")}>
-                {this.props.time}<br/>
+                {moment(this.props.time).fromNow()}<br/>
                 <strong>{this.props.user} says: </strong>
                 {this.props.text}
             </div>
@@ -43,8 +43,7 @@ var SseChatApp = SseChatApp || {};
     /** chat message input component*/
     var SaySomethingBox = React.createClass({
         handleSubmit: function () {
-            SseChatApp.submitMessage({ text: this.refs.text.getDOMNode().value, user: this.props.name,
-                time: (new Date()).toUTCString(), room: this.props.room });
+            this.props.scalaApp.submitMsg({ text: this.refs.text.getDOMNode().value, time: moment().format() });
             this.refs.text.getDOMNode().value = "";
             return false;
         },
@@ -61,7 +60,7 @@ var SseChatApp = SseChatApp || {};
     /** undo component*/
     var UndoBox = React.createClass({
         handleUndo: function () { this.props.scalaApp.undo(); },
-        handleUndoAll: function () { this.props.scalaApp.undoAll(10); },
+        handleUndoAll: function () { this.props.scalaApp.undoAll(150); },
         render: function () { return (
             <div className="undo">
                 <input type="button" className="btn" value="Undo" onClick={this.handleUndo} />
@@ -82,7 +81,7 @@ var SseChatApp = SseChatApp || {};
                 <NameRoomBox name={this.props.user} handleNameChange={this.handleNameChange}
                 room={this.props.room} handleRoomChange={this.handleRoomChange} />
                 <MsgList data={this.props.msgs} name={this.props.user}/>
-                <SaySomethingBox name={this.props.user} room={this.props.room} />
+                <SaySomethingBox scalaApp={this.props.scalaApp}/>
             </div>
         );}
     });

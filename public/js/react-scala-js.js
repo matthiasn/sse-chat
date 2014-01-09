@@ -25,3 +25,5 @@ SseChatApp.submitMessage = function (msg) {
         }
     );
 };
+
+SseChatApp.setAppState = function (appState) { }

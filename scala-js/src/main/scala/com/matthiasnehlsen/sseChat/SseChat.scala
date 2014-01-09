@@ -2,37 +2,47 @@ package com.matthiasnehlsen.sseChat
 
 import scala.collection.immutable._
 
-case class Msg(text: String, user: String, time: String, room: String)
-case class AppState(user: String, room: String, msgVector: Vector[Msg])
+// typed chat message, immutable
+case class TypedMsg(text: String, user: String, time: String, room: String)
+
+// current version of application state modeled as immutable case class
+case class AppState(user: String, room: String, msgs: Vector[TypedMsg])
 
 object App {
 
-  val r = new scala.util.Random() // for random generation of user name
-  val initialState = AppState("Jane Doe #" + r.nextInt(100), "room1", Vector[Msg]())
+  // Application state history modeled as stack. New versions of state get pushed onto stack.
+  // Previous states are available with a combination of pop and peek (called head in Scala implementation)
+  val stack = scala.collection.mutable.Stack[AppState](Utils.getInitialState)
 
-  val stack = scala.collection.mutable.Stack[AppState](initialState)
-
+  // undo state change by popping stack and trigger rendering (which reads the head)
   def undo(all: Boolean = false, interval: Int = 0): Unit = {
+    stack.pop()
+    InterOp.triggerReact()
+  }
+
+  // perform undo repeatedly until only initial element left, with interval duration between steps
+  def undoAll(interval: Int): Unit = {
     if (stack.size > 1) {
-      stack.pop()
-      InterOp.triggerReact()
-      if (all) { InterOp.setTimeout( () => undo(true, interval), interval) }
+      undo()
+      InterOp.setTimeout( () => undoAll(interval), interval)
     }
   }
 
+  // push supplied state onto stack, trigger rendering
   def updateState(state: AppState): Unit = {
     stack.push(state)
     InterOp.triggerReact()
   }
 
-  def setRoom(newRoom: String): Unit = updateState(stack.head.copy(room = newRoom))
+  // functions generating new version of state which are then pushed onto stack using updateState()
   def setUser(name: String): Unit = updateState(stack.head.copy(user = name))
-  def addMsg(msg: ChatMsg): Unit = {
-    val typedMsg = Msg(msg.text, msg.user, msg.time, msg.room)
-    updateState(stack.head.copy(msgVector = stack.head.msgVector.takeRight(3) :+ typedMsg))
+  def addMsg(msg: TypedMsg): Unit = updateState(stack.head.copy(msgs = stack.head.msgs.takeRight(3) :+ msg))
+  def setRoom(newRoom: String): Unit = {
+    updateState(stack.head.copy(room = newRoom))
+    SseChatApp.listen(stack.head.room, InterOp.addMsg _)
   }
 
-  def main(): Unit = SseChatApp.listen(stack.head.room, addMsg _)
+  def main(): Unit = SseChatApp.listen(stack.head.room, InterOp.addMsg _)
 
   /** Computes the square of an integer.
     *  This demonstrates unit testing.
