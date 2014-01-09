@@ -60,3 +60,7 @@ body {
 #roomSelect {
     width: 85px;
 }
+
+.undo {
+    padding: 20px 0;
+}

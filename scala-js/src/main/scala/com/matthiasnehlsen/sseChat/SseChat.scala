@@ -8,14 +8,15 @@ case class AppState(user: String, room: String, msgVector: Vector[Msg])
 object App {
 
   val r = new scala.util.Random() // for random generation of user name
-
   val initialState = AppState("Jane Doe #" + r.nextInt(100), "room1", Vector[Msg]())
+
   val stack = scala.collection.mutable.Stack[AppState](initialState)
 
-  def undo(): Unit = {
+  def undo(all: Boolean = false, interval: Int = 0): Unit = {
     if (stack.size > 1) {
       stack.pop()
       InterOp.triggerReact()
+      if (all) { InterOp.setTimeout( () => undo(true, interval), interval) }
     }
   }
 

@@ -58,6 +58,19 @@ var SseChatApp = SseChatApp || {};
          );}
     });
 
+    /** undo component*/
+    var UndoBox = React.createClass({
+        handleUndo: function () { this.props.scalaApp.undo(); },
+        handleUndoAll: function () { this.props.scalaApp.undoAll(10); },
+        render: function () { return (
+            <div className="undo">
+                <input type="button" className="btn" value="Undo" onClick={this.handleUndo} />
+                <input type="button" className="btn" value="Undo All" onClick={this.handleUndoAll} />
+                <span> Stack size:  {this.props.undoSize}</span>
+            </div>
+         );}
+    });
+
     /** ChatApp is the main component in this application, it holds all state, which is passed down to child components
      *  only as immutable props */
     var ChatApp = React.createClass({
@@ -65,6 +78,7 @@ var SseChatApp = SseChatApp || {};
         handleRoomChange: function (event) { this.props.scalaApp.setRoom(event.target.value); },
         render: function () { return (
             <div>
+                <UndoBox scalaApp={this.props.scalaApp} undoSize={this.props.stackSize}/>
                 <NameRoomBox name={this.props.user} handleNameChange={this.handleNameChange}
                 room={this.props.room} handleRoomChange={this.handleRoomChange} />
                 <MsgList data={this.props.msgs} name={this.props.user}/>
@@ -78,7 +92,12 @@ var SseChatApp = SseChatApp || {};
     /** render top-level ChatApp component */
     tlComp = React.renderComponent(<ChatApp scalaApp={SseChatApp.scalaApp}/>, document.getElementById('chat-app'));
     SseChatApp.setAppState = function (appState) {
-        tlComp.setProps({ msgs: appState.msgs(), user: appState.user(), room: appState.room() });
+        tlComp.setProps({
+            msgs: appState.msgs(),
+            user: appState.user(),
+            room: appState.room(),
+            stackSize: appState.stackSize()
+        });
     };
 
     SseChatApp.scalaApp.triggerReact();  // initial render triggered from here to ensure JSX is already compiled
