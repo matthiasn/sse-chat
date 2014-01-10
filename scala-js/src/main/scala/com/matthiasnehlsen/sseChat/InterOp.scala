@@ -32,7 +32,7 @@ object InterOp {
 
   def addMsg(msg: ChatMsg): Unit = App.addMsg(msg)
 
-  def triggerReact(): Unit = SseChatApp.setAppState(App.stack.head)
+  def triggerReact(state: AppState): Unit = SseChatApp.setAppState(state)
 
   def setUser(user: js.String) = App.setUser(user)
   def setRoom(room: String) = App.setRoom(room)

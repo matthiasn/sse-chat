@@ -12,13 +12,12 @@ object App {
 
   // Application state history modeled as stack. New versions of state get pushed onto stack.
   // Previous states are available with a combination of pop and peek (called head in Scala implementation)
-  val stack = scala.collection.mutable.Stack[AppState](Utils.getInitialState)
+  val stack = new ChangeAwareStack[AppState](InterOp.triggerReact)
+  stack.push(Utils.getInitialState)
+  //val stack = scala.collection.mutable.Stack[AppState](Utils.getInitialState)
 
   // undo state change by popping stack and trigger rendering (which reads the head)
-  def undo(all: Boolean = false, interval: Int = 0): Unit = {
-    stack.pop()
-    InterOp.triggerReact()
-  }
+  def undo(all: Boolean = false, interval: Int = 0): Unit = stack.pop()
 
   // perform undo repeatedly until only initial element left, with interval duration between steps
   def undoAll(interval: Int): Unit = {
@@ -28,17 +27,11 @@ object App {
     }
   }
 
-  // push supplied state onto stack, trigger rendering
-  def updateState(state: AppState): Unit = {
-    stack.push(state)
-    InterOp.triggerReact()
-  }
-
   // functions generating new version of state which are then pushed onto stack using updateState()
-  def setUser(name: String): Unit = updateState(stack.head.copy(user = name))
-  def addMsg(msg: TypedMsg): Unit = updateState(stack.head.copy(msgs = stack.head.msgs.takeRight(3) :+ msg))
-  def setRoom(newRoom: String): Unit = {
-    updateState(stack.head.copy(room = newRoom))
+  def setUser(name: String) = stack.push(stack.head.copy(user = name))
+  def addMsg(msg: TypedMsg) = stack.push(stack.head.copy(msgs = stack.head.msgs.takeRight(3) :+ msg))
+  def setRoom(newRoom: String) = {
+    stack.push(stack.head.copy(room = newRoom))
     SseChatApp.listen(stack.head.room, InterOp.addMsg _)
   }
 
