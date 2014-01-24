@@ -26,4 +26,18 @@ SseChatApp.submitMessage = function (msg) {
     );
 };
 
-SseChatApp.setAppState = function (appState) { }
+SseChatApp.setAppState = function (appState) { };
+SseChatApp.setUserProps = function (user) { };
+SseChatApp.setRoomProps = function (room) { };
+SseChatApp.setMsgsProps = function (msgs) { };
+SseChatApp.setStackSizeProps = function (stackSize) { };
+
+SseChatApp.wireHandlers = function (submitMsg, setUser, setRoom, undo, undoAll) {
+  SseChatApp.scalaApp = {
+      submitMsg: submitMsg,
+      setUser: setUser,
+      setRoom: setRoom,
+      undo: undo,
+      undoAll: undoAll
+  }
+};

@@ -10,42 +10,44 @@ trait ChatMsgTrait extends js.Object {
   var room: js.String = ???
 }
 
-class ChatMsg extends ChatMsgTrait
-
-// UI state, with Array[TypedMsg] for easy parsing from ReactJS
-case class UIState(user: String, room: String, msgs: js.Array[TypedMsg], stackSize: Int)
-
-object JSON extends js.Object {
-  def parse(jsonString: js.String): js.Object = ???
-  def stringify(json: js.Object): js.String = ???
-}
-
 /** Scala representation of SseChatApp JavaScript object holding the JS side of the app */
 object SseChatApp extends js.Object {
-  def submitMessage(msg: ChatMsg): Unit = ???
-  def listen(room: String, handler: js.Function1[ChatMsg, Unit]): Unit = ???
-  def setAppState(state: UIState): Unit = ???
+  def submitMessage(msg: ChatMsgTrait): Unit = ???
+  def listen(room: String, handler: js.Function1[ChatMsgTrait, Unit]): Unit = ???
+  def setUserProps(user: String): Unit = ???
+  def setRoomProps(room: String): Unit = ???
+  def setMsgsProps(msgs: js.Array[ChatMsgTrait]): Unit = ???
+  def setStackSizeProps(stackSize: String): Unit = ???
+  def setApp(interOp: InterOp.type): Unit = ???
+  def wireHandlers(submitMsg: js.Function1[ChatMsgTrait, Unit],
+                   setUser: js.Function1[String, Unit],
+                   setRoom: js.Function1[String, Unit],
+                   undo: js.Function0[Unit],
+                   undoAll: js.Function1[String, Unit]): Unit = ???
 }
 
 object InterOp {
-  import AppImplicits._
+  def addMsg(msg: ChatMsgTrait): Unit = App.addMsg(msg)
 
-  def addMsg(msg: ChatMsg): Unit = App.addMsg(msg)
+  def triggerReact(): Unit = {
+    val state = App.stack.head
+    SseChatApp.setUserProps(state.user)
+    SseChatApp.setRoomProps(state.room)
+    SseChatApp.setMsgsProps(state.msgs.toArray[ChatMsgTrait])
+    SseChatApp.setStackSizeProps(App.stack.size.toString)
+  }
 
-  def triggerReact(state: AppState): Unit = SseChatApp.setAppState(state)
+  def setUser(user: String): Unit = App.setUser(user.toString)
+  def setRoom(room: String): Unit = App.setRoom(room)
 
-  def setUser(user: js.String) = App.setUser(user)
-  def setRoom(room: String) = App.setRoom(room)
-
-  def submitMsg(msg: ChatMsg) = {
+  def submitMsg(msg: ChatMsgTrait) = {
     msg.room = App.stack.head.room
     msg.user = App.stack.head.user
     SseChatApp.submitMessage(msg)
   }
 
-  def undo() = App.undo()
-  def undoAll(interval: Int) = App.undoAll(interval)
+  def undo(): Unit = App.undo()
+  def undoAll(interval: String): Unit = App.undoAll(interval.toInt)
 
   def setTimeout(fn: () => Unit, millis: Int): Unit = g.setTimeout(fn, millis)
-
 }

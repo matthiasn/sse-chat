@@ -20,7 +20,7 @@ var SseChatApp = SseChatApp || {};
             var data = [].concat(this.props.data);
             var msgNodes = data.map(function (msg) {
                 if (!msg) return "";
-                return <ChatMsg user={msg.user()} time={msg.time()} text={msg.text()} name={this.props.name} />;
+                return <ChatMsg user={msg.user} time={msg.time} text={msg.text} name={this.props.name} />;
             }.bind(this));
             return <div id="chat">{msgNodes}</div>;
         }
@@ -86,18 +86,12 @@ var SseChatApp = SseChatApp || {};
         );}
     });
 
-    SseChatApp.scalaApp = ScalaJS.modules.com_matthiasnehlsen_sseChat_InterOp();
-
     /** render top-level ChatApp component */
-    tlComp = React.renderComponent(<ChatApp scalaApp={SseChatApp.scalaApp}/>, document.getElementById('chat-app'));
-    SseChatApp.setAppState = function (appState) {
-        tlComp.setProps({
-            msgs: appState.msgs(),
-            user: appState.user(),
-            room: appState.room(),
-            stackSize: appState.stackSize()
-        });
-    };
+    var tlComp = React.renderComponent(<ChatApp scalaApp={SseChatApp.scalaApp}/>, document.getElementById('chat-app'));
 
-    SseChatApp.scalaApp.triggerReact();  // initial render triggered from here to ensure JSX is already compiled
+    /** update UI by passing passing changed application state */
+    SseChatApp.setUserProps      = function (user)      { tlComp.setProps({ user: user }); };
+    SseChatApp.setRoomProps      = function (room)      { tlComp.setProps({ room: room }); };
+    SseChatApp.setMsgsProps      = function (msgs)      { tlComp.setProps({ msgs: msgs }); };
+    SseChatApp.setStackSizeProps = function (stackSize) { tlComp.setProps({ stackSize: stackSize }); };
 })();

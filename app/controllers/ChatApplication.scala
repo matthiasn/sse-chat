@@ -19,6 +19,7 @@ object ChatApplication extends Controller {
 
   /** Controller action serving React chat page */
   def indexReactScalaJS = Action { Ok(views.html.react_scala_js("Chat using Server Sent Events, React and Scala.js")) }
+  def indexReactScalaJsOpt = Action { Ok(views.html.react_scala_js_opt("Chat using Server Sent Events, React and Scala.js")) }
 
   /** Controller action for POSTing chat messages */
   def postMessage = Action(parse.json) { req => println(req.body); chatChannel.push(req.body); Ok }
