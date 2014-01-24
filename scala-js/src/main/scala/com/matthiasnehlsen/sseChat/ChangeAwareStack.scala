@@ -1,10 +1,9 @@
 package com.matthiasnehlsen.sseChat
 
-import com.matthiasnehlsen.sseChat.ChangeAwareStack
-
+import scala.collection.mutable.Stack
 // custom stack implementation based on mutable Stack for any type T
 // takes callback function argument, which it will call on changes with the current head after the change
-class ChangeAwareStack[T](onChange: () => Unit) extends scala.collection.mutable.Stack[T] {
+class ChangeAwareStack[T](onChange: () => Unit) extends Stack[T] {
 
   override def push(elem: T) = {
     val res = super.push(elem)
@@ -23,4 +22,5 @@ class ChangeAwareStack[T](onChange: () => Unit) extends scala.collection.mutable
 
 object ChangeAwareStack {
   def apply[T](onChange: () => Unit) = new ChangeAwareStack[T](onChange)
+
 }

@@ -25,6 +25,8 @@ This application will work in Firefox, Safari, Chrome and Opera. It will not wor
 
 More information on **[matthiasnehlsen.com](http://matthiasnehlsen.com/blog/2013/06/23/angularjs-and-play-framework/)**.
 
+**Edit January 2014**: there is also a client version running Scala.js, please check the **[README](./scala-js/README.md)** in the scala-js folder.
+
 ## Licence
 
 This software is licensed under the Apache 2 license, quoted below.

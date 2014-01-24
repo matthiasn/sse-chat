@@ -19,18 +19,14 @@ object SseChatApp extends js.Object {
   def setMsgsProps(msgs: js.Array[ChatMsgTrait]): Unit = ???
   def setStackSizeProps(stackSize: String): Unit = ???
   def setApp(interOp: InterOp.type): Unit = ???
-  def wireHandlers(submitMsg: js.Function1[ChatMsgTrait, Unit],
-                   setUser: js.Function1[String, Unit],
-                   setRoom: js.Function1[String, Unit],
-                   undo: js.Function0[Unit],
-                   undoAll: js.Function1[String, Unit]): Unit = ???
 }
 
+/** methods of this object are individually exported in startup.js (to avoid having the closure compiler rename them) */
 object InterOp {
   def addMsg(msg: ChatMsgTrait): Unit = App.addMsg(msg)
 
   def triggerReact(): Unit = {
-    val state = App.stack.head
+    val state = App.stack.peek
     SseChatApp.setUserProps(state.user)
     SseChatApp.setRoomProps(state.room)
     SseChatApp.setMsgsProps(state.msgs.toArray[ChatMsgTrait])
@@ -41,8 +37,8 @@ object InterOp {
   def setRoom(room: String): Unit = App.setRoom(room)
 
   def submitMsg(msg: ChatMsgTrait) = {
-    msg.room = App.stack.head.room
-    msg.user = App.stack.head.user
+    msg.room = App.stack.peek.room
+    msg.user = App.stack.peek.user
     SseChatApp.submitMessage(msg)
   }
 

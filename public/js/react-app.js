@@ -60,7 +60,7 @@ var SseChatApp = SseChatApp || {};
     /** undo component*/
     var UndoBox = React.createClass({
         handleUndo: function () { this.props.scalaApp.undo(); },
-        handleUndoAll: function () { this.props.scalaApp.undoAll(150); },
+        handleUndoAll: function () { this.props.scalaApp.undoAll(10); },
         render: function () { return (
             <div className="undo">
                 <input type="button" className="btn" value="Undo" onClick={this.handleUndo} />
@@ -87,11 +87,11 @@ var SseChatApp = SseChatApp || {};
     });
 
     /** render top-level ChatApp component */
-    var tlComp = React.renderComponent(<ChatApp scalaApp={SseChatApp.scalaApp}/>, document.getElementById('chat-app'));
+    var tlComp = React.renderComponent(<ChatApp scalaApp={ScalaApp}/>, document.getElementById('chat-app'));
 
-    /** update UI by passing passing changed application state */
-    SseChatApp.setUserProps      = function (user)      { tlComp.setProps({ user: user }); };
-    SseChatApp.setRoomProps      = function (room)      { tlComp.setProps({ room: room }); };
-    SseChatApp.setMsgsProps      = function (msgs)      { tlComp.setProps({ msgs: msgs }); };
-    SseChatApp.setStackSizeProps = function (stackSize) { tlComp.setProps({ stackSize: stackSize }); };
+    /** pass props to top level component */
+    SseChatApp.setProps = function (props) { tlComp.setProps(props); };
+
+    /** application ready, call initial trigger so that name and room get loaded without receiving message */
+    ScalaApp.triggerReact();
 })();
