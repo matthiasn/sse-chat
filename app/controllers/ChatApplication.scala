@@ -22,7 +22,7 @@ object ChatApplication extends Controller {
   def indexReactScalaJsOpt = Action { Ok(views.html.react_scala_js_opt("Chat using Server Sent Events, React and Scala.js")) }
 
   /** Controller action for POSTing chat messages */
-  def postMessage = Action(parse.json) { req => println(req.body); chatChannel.push(req.body); Ok }
+  def postMessage = Action(parse.json) { req => chatChannel.push(req.body); Ok }
 
   /** Enumeratee for filtering messages based on room */
   def filter(room: String) = Enumeratee.filter[JsValue] { json: JsValue => (json \ "room").as[String] == room }

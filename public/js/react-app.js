@@ -41,6 +41,7 @@
         handleSubmit: function () {
             var msg = { text: this.refs.text.getDOMNode().value, user: this.props.name,
                 time: (new Date()).toUTCString(), room: "room" + this.props.room };
+            console.log(msg)
             $.ajax({url: "/chat", type: "POST", data: JSON.stringify(msg),
                 contentType:"application/json; charset=utf-8", dataType:"json"});
             this.refs.text.getDOMNode().value = ""; // empty text field

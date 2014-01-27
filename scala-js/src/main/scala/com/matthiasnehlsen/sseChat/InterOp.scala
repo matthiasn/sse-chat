@@ -12,7 +12,6 @@ trait ChatMsgTrait extends js.Object {
 
 /** Scala representation of SseChatApp JavaScript object holding the JS side of the app */
 object SseChatApp extends js.Object {
-  def submitMessage(msg: ChatMsgTrait): Unit = ???
   def listen(room: String, handler: js.Function1[ChatMsgTrait, Unit]): Unit = ???
   def setUserProps(user: String): Unit = ???
   def setRoomProps(room: String): Unit = ???
@@ -35,12 +34,6 @@ object InterOp {
 
   def setUser(user: String): Unit = App.setUser(user.toString)
   def setRoom(room: String): Unit = App.setRoom(room)
-
-  def submitMsg(msg: ChatMsgTrait) = {
-    msg.room = App.stack.peek.room
-    msg.user = App.stack.peek.user
-    SseChatApp.submitMessage(msg)
-  }
 
   def undo(): Unit = App.undo()
   def undoAll(interval: String): Unit = App.undoAll(interval.toInt)

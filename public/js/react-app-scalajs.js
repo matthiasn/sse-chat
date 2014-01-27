@@ -43,7 +43,8 @@ var SseChatApp = SseChatApp || {};
     /** chat message input component*/
     var SaySomethingBox = React.createClass({
         handleSubmit: function () {
-            this.props.scalaApp.submitMsg({ text: this.refs.text.getDOMNode().value, time: moment().format() });
+            SseChatApp.submitMessage({ text: this.refs.text.getDOMNode().value, time: moment().format(),
+                                       user: this.props.name, room: this.props.room });
             this.refs.text.getDOMNode().value = "";
             return false;
         },
@@ -81,7 +82,7 @@ var SseChatApp = SseChatApp || {};
                 <NameRoomBox name={this.props.user} handleNameChange={this.handleNameChange}
                 room={this.props.room} handleRoomChange={this.handleRoomChange} />
                 <MsgList data={this.props.msgs} name={this.props.user}/>
-                <SaySomethingBox scalaApp={this.props.scalaApp}/>
+                <SaySomethingBox name={this.props.user} room={this.props.room}/>
             </div>
         );}
     });
