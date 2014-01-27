@@ -25,7 +25,7 @@ This application will work in Firefox, Safari, Chrome and Opera. It will not wor
 
 More information on **[matthiasnehlsen.com](http://matthiasnehlsen.com/blog/2013/06/23/angularjs-and-play-framework/)**.
 
-**Edit January 2014**: there is also a client version running Scala.js, please check the **[README](./scala-js/README.md)** in the scala-js folder.
+**Edit January 2014**: there is also a client version running Scala.js, please check the **[README](./scala-js/README.md)** in the scala-js folder for more information how to build this. The Closure Compiler optimized JavaScript of the application is included in this project, whereas the other resulting files from the build process are excluded for reasons of space.
 
 ## Licence
 
