@@ -17,11 +17,10 @@ There are Romeo and Juliet hanging out in Room 1 in order to make looking at the
 
 How to run this: 
 
-1) if Play is installed on your machine: **play run** in the project folder
-    
-2) if Play is not installed you can make use of the Typesafe Activator feature: **./activator ui** in the project folder (or double click on activator script in OS X)
+1) if **[Typesafe Activator](https://typesafe.com/activator)** is installed on your machine: **activator run** from inside the project folder
+2) if Activator is not installed, you can run: **./activator run** in the project folder (or double click on activator script in OS X)
 
-This application will work in Firefox, Safari, Chrome and Opera. It will not work in Internet Explorer, simply because Microsoft for whatever reason does not support Server Sent Events.  
+This application will work in Firefox, Safari, Chrome and Opera. It will not work in Internet Explorer, simply because Microsoft for whatever reason does not support Server Sent Events.
 
 More information at **[matthiasnehlsen.com](http://matthiasnehlsen.com/blog/2013/06/23/angularjs-and-play-framework/)**.
 
