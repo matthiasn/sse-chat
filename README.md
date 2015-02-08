@@ -3,6 +3,8 @@ sse-chat
 
 This is a simple chat application using **[Play Framework](http://www.playframework.com)** together with **[AngularJS](http://angularjs.org)**. It makes use of a Concurrent.Broadcast object as an Enumerator, a filtering Enumeratee and EventSource as the **[Iteratee](http://www.playframework.com/documentation/2.1.0/Iteratees)**. Together these building blocks facilitate the chat message data flow within the application. 
 
+Check out the **[live demo](http://sse-chat.matthiasnehlsen.com)**.
+
 ![Architecture](./tutorial/sse-chat.png)
 
 The application uses Server Sent Events to deliver messages to the client and REST calls to send messages to the server. The messages flow from the POST to the **[Server Sent Events (SSE)](http://dev.w3.org/html5/eventsource/)** stream through Concurrent.broadcast as the central information hub into the chatFeed controller which attaches an Enumeratee / Iteratee chain to the Enumerator provided by Concurrent.broadcast. Filtering for the correct chat room is done with a filtering Enumeratee. 
